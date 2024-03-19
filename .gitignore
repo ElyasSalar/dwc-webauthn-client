@@ -1,0 +1,16 @@
+dist/
+
+*~
+*.sw[mnpcod]
+*.log
+*.lock
+*.tmp
+*.tmp.*
+
+.idea/
+.vscode/
+.versions/
+node_modules/
+
+.env
+coverages
