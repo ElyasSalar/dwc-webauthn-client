@@ -29,7 +29,7 @@ export default [
     output: {
       dir: 'dist',
       format: 'umd',
-      name: 'dwcWebauthn',
+      name: 'dwcWebAuthn',
       entryFileNames: 'bundle/[name].es5.umd.min.js',
       plugins: [terser()],
     },

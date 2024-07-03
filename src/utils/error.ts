@@ -17,7 +17,7 @@ import { isValidDomain } from "../utils/validation";
  * @param {string} [options.name] - The name of the error.
  */
 export class WebAuthnError extends Error {
-  code: WebAuthnErrorCode;
+  code: typeof WebAuthnErrorCode[keyof typeof WebAuthnErrorCode];
 
   constructor({
     message,
@@ -26,7 +26,7 @@ export class WebAuthnError extends Error {
     name,
   }: {
     message: string;
-    code: WebAuthnErrorCode;
+    code: typeof WebAuthnErrorCode[keyof typeof WebAuthnErrorCode];
     cause: Error;
     name?: string;
   }) {
