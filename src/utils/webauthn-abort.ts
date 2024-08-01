@@ -1,4 +1,4 @@
-class WebAuthnAbortService {
+export class WebAuthnAbort {
   private controller: AbortController | undefined;
 
   /**
@@ -39,4 +39,4 @@ class WebAuthnAbortService {
  * A service singleton to help ensure that only a single WebAuthn operation is active at a time.
  * Intended for use in projects that need to control the behavior of their UX in response to events.
  */
-export const webAuthnAbortService = new WebAuthnAbortService();
+export const webAuthnAbort = new WebAuthnAbort();

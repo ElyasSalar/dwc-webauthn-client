@@ -7,7 +7,7 @@ import type {
 import { bufferToBase64URLString, base64URLStringToBuffer, bufferToUTF8String } from '../utils/communications';
 import { browserSupportsWebAuthn, browserSupportsWebAuthnAutofill } from '../utils/browser-supports';
 import { identifyAuthenticationError } from '../utils/error';
-import { webAuthnAbortService } from '../utils/webAuthnAbortService';
+import { webAuthnAbort } from '../utils/webauthn-abort';
 import { toAuthenticatorAttachment, toPublicKeyCredentialDescriptor } from '../utils/transformers';
 
 /**
@@ -73,7 +73,7 @@ export async function authenticate(
   }
 
   options.publicKey = publicKey;
-  options.signal = webAuthnAbortService.createAbortSignal();
+  options.signal = webAuthnAbort.createAbortSignal();
 
   let credential: AuthenticationCredential;
   try {

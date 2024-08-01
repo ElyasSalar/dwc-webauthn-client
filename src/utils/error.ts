@@ -18,6 +18,7 @@ import { isValidDomain } from "../utils/validation";
  */
 export class WebAuthnError extends Error {
   code: typeof WebAuthnErrorCode[keyof typeof WebAuthnErrorCode];
+  cause: Error;
 
   constructor({
     message,
@@ -25,16 +26,15 @@ export class WebAuthnError extends Error {
     cause,
     name,
   }: {
-    message: string;
-    code: typeof WebAuthnErrorCode[keyof typeof WebAuthnErrorCode];
+    message?: string;
+    code?: typeof WebAuthnErrorCode[keyof typeof WebAuthnErrorCode];
     cause: Error;
     name?: string;
   }) {
-    // @ts-ignore: help Rollup understand that `cause` is okay to set
     super(message, { cause });
     this.name = name ?? cause.name;
-    this.code = code;
-    this.stack = cause.stack;
+    this.code = code ?? WebAuthnErrorCode.AUTHENTICATOR_GENERAL_ERROR;
+    this.stack = cause?.stack;
   }
 }
 
@@ -72,7 +72,7 @@ export function identifyAuthenticationError({
 }: {
   error: Error;
   options: CredentialRequestOptions;
-}): WebAuthnError | Error {
+}): WebAuthnError {
   const { publicKey } = options;
 
   if (!publicKey) {
@@ -117,7 +117,12 @@ export function identifyAuthenticationError({
     });
   }
 
-  return error;
+  return new WebAuthnError({
+    message: "Unknown Error",
+    name: ErrorNames.UnknownError,
+    code: WebAuthnErrorCode.AUTHENTICATOR_GENERAL_ERROR,
+    cause: error,
+  });
 }
 
 /**

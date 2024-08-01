@@ -6,11 +6,10 @@ import type {
 } from '../types';
 
 import { bufferToBase64URLString, base64URLStringToBuffer, utf8StringToBuffer } from '../utils/communications';
-import { browserSupportsWebAuthn } from '../utils/browser-supports';
+import { browserSupportsWebAuthn, safeBrowserApiCall } from '../utils/browser-supports';
 import { identifyRegistrationError } from '../utils/error';
-import { webAuthnAbortService } from '../utils/webAuthnAbortService';
+import { webAuthnAbort } from '../utils/webauthn-abort';
 import { toAuthenticatorAttachment, toPublicKeyCredentialDescriptor } from '../utils/transformers';
-import { safeBrowserApiCall } from 'utils/browser-supports';
 
 /**
  * Begin authenticator "registration" via WebAuthn attestation
@@ -39,7 +38,7 @@ export async function register(
   };
 
   const options: CredentialCreationOptions = { publicKey };
-  options.signal = webAuthnAbortService.createAbortSignal();
+  options.signal = webAuthnAbort.createAbortSignal();
 
   let credential: RegistrationCredential;
   try {

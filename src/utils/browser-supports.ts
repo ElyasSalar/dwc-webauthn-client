@@ -28,7 +28,7 @@ export const safeBrowserApiCall = (
 export function browserSupportsWebAuthn(): boolean {
   return (
     window?.PublicKeyCredential !== undefined &&
-    typeof window.PublicKeyCredential === 'function'
+    typeof window?.PublicKeyCredential === 'function'
   );
 }
 
@@ -40,7 +40,7 @@ export function browserSupportsWebAuthn(): boolean {
  */
 export function browserSupportsWebAuthnAutofill(): Promise<boolean> {
 
-  if (PublicKeyCredential.isConditionalMediationAvailable === undefined) {
+  if (PublicKeyCredential?.isConditionalMediationAvailable === undefined) {
     return Promise.resolve(false);
   }
 
